@@ -16,15 +16,15 @@
         }
 
         .square {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             background-color: red;
             position: absolute;
             transition: 0.2s background-color
         }
 
         #elem-1 {
-            top: -50px;
+            top: 150px;
             left: 150px;
         }
 
@@ -51,15 +51,31 @@
 <body>
 
     <div id="container">
-        <div class="white-in-view-check square" id="elem-1"></div>
-        <div class="white-in-view-check square" id="elem-2"></div>
-        <div class="white-in-view-check square" id="elem-3"></div>
-        <div class="white-in-view-check square" id="elem-4"></div>
+        <div class="white-in-view-check square" id="elem-1" data-offset-top="150" data-offset-bottom="200" data-percentage="false">
+            Top: 150 <br>
+            Bottom: 200 <br>
+            Percentage: false
+        </div>
+        <div class="white-in-view-check square" id="elem-2" data-offset-top="10" data-offset-bottom="20" data-percentage="true">
+            Top: 10 <br>
+            Bottom: 20 <br>
+            Percentage: true
+        </div>
+        <div class="white-in-view-check square" id="elem-3" data-offset-top="250" data-offset-bottom="100" data-percentage="false">
+            Top: 250 <br>
+            Bottom: 100 <br>
+            Percentage: false
+        </div>
+        <div class="white-in-view-check square" id="elem-4" data-offset-top="5" data-offset-bottom="50" data-percentage="true">
+            Top: 5 <br>
+            Bottom: 50 <br>
+            Percentage: true
+        </div>
     </div>
     
-    <script src="white-in-view.min.js"></script>
+    <script src="white-in-view.js"></script>
     <script>
-        whiteInView(20, 10, true);
+        whiteInView();
     </script>
 </body>
 </html>
