@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>white-in-view</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        #container {
+            height: 300vh;
+            width: 100%;
+            position: relative;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+            transition: 0.2s background-color
+        }
+
+        #elem-1 {
+            top: -50px;
+            left: 150px;
+        }
+
+        #elem-2 {
+            top: 600px;
+            left: 400px;
+        }
+
+        #elem-3 {
+            top: 1200px;
+            left: 600px;
+        }
+
+        #elem-4 {
+            top: 1500px;
+            left: 450px;
+        }
+
+        .white-is-in-view {
+            background-color: #bada55;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div class="white-in-view-check square" id="elem-1"></div>
+        <div class="white-in-view-check square" id="elem-2"></div>
+        <div class="white-in-view-check square" id="elem-3"></div>
+        <div class="white-in-view-check square" id="elem-4"></div>
+    </div>
+    
+    <script src="white-in-view.min.js"></script>
+    <script>
+        whiteInView(20, 10, true);
+    </script>
+</body>
+</html>

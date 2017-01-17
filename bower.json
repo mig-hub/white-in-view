@@ -1,0 +1,20 @@
+{
+  "name": "white-in-view",
+  "main": "white-in-view.js",
+  "authors": [
+    "Francesco Michelini <kekkorider@gmail.com>"
+  ],
+  "description": "",
+  "keywords": [
+    "in-view"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
