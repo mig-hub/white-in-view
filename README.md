@@ -2,7 +2,7 @@
 A simple script to check whether an element is in the viewport.
 
 # Installation
-Include the `white-in-view.min.js` script before the closing `<body>` tag.
+Include the `white-in-view.min.js` script before the closing `</body>` tag.
 ```
 <script src="PATH/TO/SCRIPT/white-in-view.min.js"></script>
 ```
