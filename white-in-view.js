@@ -1,47 +1,47 @@
-function whiteInView() {
+'use strict';
 
-    'use strict';
+function whiteInView() {}
 
-    var inViewElems       = document.querySelectorAll('.white-in-view-check'), 
-        inViewElemsLength = inViewElems.length, 
-        bounds            = null, 
-        isInView          = false, 
-        offsetTop         = null, 
-        offsetBottom      = null, 
-        isPercentage      = null ,
-        current           = null;
+whiteInView.prototype = {
 
-    function checkBounds() {
-        for(var i = 0; i < inViewElemsLength; i++) {
+    inViewElems: document.querySelectorAll('.white-in-view-check'), 
+    inViewElemsLength: document.querySelectorAll('.white-in-view-check').length, 
 
-            bounds              = inViewElems[i].getBoundingClientRect();
-            offsetTop           = inViewElems[i].getAttribute('data-offset-top') ? parseInt(inViewElems[i].getAttribute('data-offset-top')) : 0;
-            offsetBottom        = inViewElems[i].getAttribute('data-offset-bottom') ? parseInt(inViewElems[i].getAttribute('data-offset-bottom')) : window.innerHeight;
-            isPercentage        = inViewElems[i].getAttribute('data-percentage') && inViewElems[i].getAttribute('data-percentage') === 'true';
+    checkBounds: function() {
+        for(var i = 0; i < this.inViewElemsLength; i++) {
+
+            var bounds       = this.inViewElems[i].getBoundingClientRect();
+            var offsetTop    = this.inViewElems[i].getAttribute('data-offset-top') ? parseInt(this.inViewElems[i].getAttribute('data-offset-top')) : 0;
+            var offsetBottom = this.inViewElems[i].getAttribute('data-offset-bottom') ? parseInt(this.inViewElems[i].getAttribute('data-offset-bottom')) : window.innerHeight;
+            var isPercentage = this.inViewElems[i].getAttribute('data-percentage') && this.inViewElems[i].getAttribute('data-percentage') === 'true';
 
             if ( isPercentage ) {
                 if ( offsetBottom ) offsetBottom = offsetBottom * window.innerHeight / 100;
                 if ( offsetTop ) offsetTop = offsetTop * window.innerHeight / 100;
             }
 
-            isInView = bounds.top < (window.innerHeight - offsetBottom) && bounds.bottom > (0 + offsetTop);
+            var isInView = bounds.top < (window.innerHeight - offsetBottom) && bounds.bottom > (0 + offsetTop);
 
             if ( isInView ) {
-                inViewElems[i].classList.add('white-is-in-view');
+                this.inViewElems[i].classList.add('white-is-in-view');
             } else {
-                inViewElems[i].classList.remove('white-is-in-view');
+                this.inViewElems[i].classList.remove('white-is-in-view');
             }
 
         }
-    }
+    }, 
+    
+    init: function() {
 
-    function checkInView() {
+        var self = this;
+
         requestAnimationFrame(function() {
-            checkBounds();
-            checkInView();
-        })
-    }
+            self.checkBounds();
+            self.init();
+        });
 
-    checkInView();
+    }
 
 }
+
+var whiteInView = Object.create(whiteInView.prototype);

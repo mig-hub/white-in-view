@@ -2,13 +2,19 @@
 A simple script to check whether an element is in the viewport.
 
 # Installation
+
+First of all, download the script package from here or from Bower
+```
+bower install white-in-view
+```
+
 Include the `white-in-view.min.js` script before the closing `</body>` tag.
 ```
 <script src="PATH/TO/SCRIPT/white-in-view.min.js"></script>
 ```
 Assign the `.white-in-view-check` class to each element you want to apply the script to.
 
-After that, call the `whiteInView()` function. That's it.
+After that, call the `whiteInView.init()` function. That's it.
 
 Once an element enters the defined viewport the script applies the `.white-is-in-view` CSS class, then it's up to you to make the stuff do some magic.
 
