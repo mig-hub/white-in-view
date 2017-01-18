@@ -73,9 +73,13 @@
         </div>
     </div>
     
-    <script src="white-in-view.min.js"></script>
+    <script src="white-in-view.js"></script>
     <script>
         whiteInView.init();
+
+        document.getElementById('elem-3').addEventListener('whiteInView.onElementInView', function(e) {
+            console.log(e);
+        });
     </script>
 </body>
 </html>

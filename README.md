@@ -36,6 +36,33 @@ The amount (in PX or %) of the vertical offset from the bottom.
 ## data-percentage
 Whether the offset values are in percentage (related to the window height) instead of px.
 
+# Events
+
+## whiteInView.onInit
+Triggered on init.
+
+```
+window.addEventListener('whiteInView.onInit', function() {
+    // Do stuff ...
+});
+```
+
+## whiteInView.onElementInView
+Triggered when an element enters its viewport.
+```
+document.querySelector('.my-element').addEventListener('whiteInView.onElementInView', function() {
+    // Do stuff ...
+});
+```
+
+## whiteInView.onElementOutView
+Triggered when an element exits its viewport.
+```
+document.querySelector('.my-element').addEventListener('whiteInView.onElementOutView', function() {
+    // Do stuff ...
+});
+```
+
 # Compatibility
 The script has been tested on:
 
