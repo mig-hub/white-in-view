@@ -1,55 +1,108 @@
 # white-in-view
-A simple script to check whether an element is in the viewport.
+A simple vanilla JavaScript library to check whether an element is into the viewport.
 
 # Installation
 
-First of all, download the script package from here or from Bower
+First, download the script package directly from Github or via Bower
 ```
 bower install white-in-view
 ```
 
 Include the `white-in-view.min.js` script before the closing `</body>` tag.
-```
+```html
 <script src="PATH/TO/SCRIPT/white-in-view.min.js"></script>
 ```
-Assign the `.white-in-view-check` class to each element you want to apply the script to.
+Create a new instance of `WhiteInView()` and run it.
+```javascript
+// Setting the selector
+var mySelector = document.querySelectorAll('.my-class');
 
-After that, call the `whiteInView.init()` function. That's it.
+// Creating the new instance
+var myInstance = new WhiteInView(mySelector);
 
-Once an element enters the defined viewport the script applies the `.white-is-in-view` CSS class, then it's up to you to make the stuff do some magic.
-
-Check the section below for a list of the parameters to use.
-
-# Parameters
-
-Here's an example of an element with all the parameters applied on it.
-```
-<div class="my-element white-in-view-check" data-offset-top="150" data-offset-bottom="250" data-percentage="true"></div>
+// Now run the .init() method
+myInstance.init();
 ```
 
-## data-offset-top
+Once an element enters the viewport the script applies the `.white-is-in-view` CSS class, and if the element is not into the viewport the `.white-is-out-view` class is applied.
+
+You can change those classes using the options parameter when declaring the instance.
+
+# HTML attributes
+
+Here's an example of an element with all the custom attributes applied on it.
+```html
+<div class="my-class" data-offset-top="150" data-offset-bottom="250" data-percentage="true"></div>
+```
+
+## data-offset-top (int)
 The amount (in PX or %) of the vertical offset from the top.
 
-## data-offset-bottom
+## data-offset-bottom (int)
 The amount (in PX or %) of the vertical offset from the bottom.
 
-## data-percentage
+## data-percentage (bool)
 Whether the offset values are in percentage (related to the window height) instead of px.
+
+# Options
+
+## inViewClass (string)
+The CSS class that's applied to the element(s) that are into the viewport. Default: `white-is-in-view`.
+
+```javascript
+var myInstance = new WhiteInView(mySelector, {
+    inViewClass: 'my-custom-class'
+});
+```
+
+## outViewClass (string)
+The CSS class that's applied to the element(s) that ARE NOT into the viewport. Default: `white-is-out-view`.
+
+```javascript
+var myInstance = new WhiteInView(mySelector, {
+    outViewClass: 'my-custom-class'
+});
+```
+
+# Methods
+
+## .init()
+Initializes the WhiteInView instance. Triggers the `whiteInView.onInit` event on the `window` element.
+
+```
+myInstance.init();
+```
+
+## .stop()
+Stops the WhiteInView instance. Triggers the `whiteInView.onStop` event on the element(s) that match(es) the selector.
+
+```
+myInstance.stop();
+```
 
 # Events
 
 ## whiteInView.onInit
 Triggered on init.
 
-```
+```javascript
 window.addEventListener('whiteInView.onInit', function() {
+    // Do stuff ...
+});
+```
+
+## whiteInView.onStop
+Triggered when the .stop() method is called.
+
+```javascript
+window.addEventListener('whiteInView.onStop', function() {
     // Do stuff ...
 });
 ```
 
 ## whiteInView.onElementInView
 Triggered when an element enters its viewport.
-```
+```javascript
 document.querySelector('.my-element').addEventListener('whiteInView.onElementInView', function() {
     // Do stuff ...
 });
@@ -57,7 +110,7 @@ document.querySelector('.my-element').addEventListener('whiteInView.onElementInV
 
 ## whiteInView.onElementOutView
 Triggered when an element exits its viewport.
-```
+```javascript
 document.querySelector('.my-element').addEventListener('whiteInView.onElementOutView', function() {
     // Do stuff ...
 });

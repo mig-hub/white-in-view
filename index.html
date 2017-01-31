@@ -15,71 +15,55 @@
             position: relative;
         }
 
-        .square {
-            width: 150px;
-            height: 150px;
+        .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 999px;
             background-color: red;
             position: absolute;
             transition: 0.2s background-color
         }
 
-        #elem-1 {
-            top: 150px;
-            left: 150px;
-        }
-
-        #elem-2 {
-            top: 600px;
-            left: 400px;
-        }
-
-        #elem-3 {
-            top: 1200px;
-            left: 600px;
-        }
-
-        #elem-4 {
-            top: 1500px;
-            left: 450px;
-        }
-
-        .white-is-in-view {
-            background-color: #bada55;
+        .is-in-view {
+            background-color: #bada55
         }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <div class="white-in-view-check square" id="elem-1" data-offset-top="150" data-offset-bottom="200" data-percentage="false">
-            Top: 150 <br>
-            Bottom: 200 <br>
-            Percentage: false
-        </div>
-        <div class="white-in-view-check square" id="elem-2" data-offset-top="10" data-offset-bottom="20" data-percentage="true">
-            Top: 10 <br>
-            Bottom: 20 <br>
-            Percentage: true
-        </div>
-        <div class="white-in-view-check square" id="elem-3" data-offset-top="250" data-offset-bottom="100" data-percentage="false">
-            Top: 250 <br>
-            Bottom: 100 <br>
-            Percentage: false
-        </div>
-        <div class="white-in-view-check square" id="elem-4" data-offset-top="5" data-offset-bottom="50" data-percentage="true">
-            Top: 5 <br>
-            Bottom: 50 <br>
-            Percentage: true
-        </div>
-    </div>
+    <div id="container"></div>
     
     <script src="white-in-view.js"></script>
     <script>
-        whiteInView.init();
 
-        document.getElementById('elem-3').addEventListener('whiteInView.onElementInView', function(e) {
-            console.log(e);
+        var i = 0, 
+            max = 200, 
+            cont = document.getElementById('container');
+
+        for(i; i < max; i++) {
+            var elem = document.createElement('div');
+            elem.classList.add('white-in-view-check');
+            elem.classList.add('circle');
+            elem.style.top = Math.floor(Math.random() * document.body.scrollHeight - 70) + 'px';
+            elem.style.left = Math.floor(Math.random() * window.innerWidth - 70) + 'px';
+            elem.setAttribute('data-offset-top', 100);
+            elem.setAttribute('data-offset-bottom', 100);
+            cont.appendChild(elem);
+        }
+
+        var four = new WhiteInView(document.querySelectorAll('.white-in-view-check'), {
+            inViewClass: 'is-in-view', 
+            outViewClass: 'is-out-view'
         });
+        four.init();
+
+        // window.addEventListener('whiteInView.onInit', function() {
+        //     console.log('init');
+        // });
+
+        // document.getElementById('elem-3').addEventListener('whiteInView.onElementInView', function() {
+        //     console.log('in view');
+        // });
     </script>
 </body>
 </html>

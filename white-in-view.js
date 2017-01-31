@@ -1,62 +1,86 @@
 'use strict';
 
-function whiteInView() {}
+function WhiteInView(elems, opts) {
 
-whiteInView.prototype = {
+    if (elems === undefined)
+        throw new Error('No elements selected for the WhiteInView instance.');
 
-    inViewElems: document.querySelectorAll('.white-in-view-check'), 
-    inViewElemsLength: document.querySelectorAll('.white-in-view-check').length, 
+    this.elems = [];
+    this.isElemsList = isNodeList(elems);
 
-    events: {
-        onInit: new Event('whiteInView.onInit'), 
-        onElementInView: new Event('whiteInView.onElementInView'), 
-        onElementOutView: new Event('whiteInView.onElementOutView')
-    }, 
+    if ( this.isElemsList ) {
+        this.elems = elems;
+    } else {
+        this.elems.push(elems);
+    }
 
-    checkBounds: function() {
-        for(var i = 0; i < this.inViewElemsLength; i++) {
+    this.elemsLength = this.elems.length;
+    this.running = false;
 
-            var bounds       = this.inViewElems[i].getBoundingClientRect();
-            var offsetTop    = this.inViewElems[i].getAttribute('data-offset-top') ? parseInt(this.inViewElems[i].getAttribute('data-offset-top')) : 0;
-            var offsetBottom = this.inViewElems[i].getAttribute('data-offset-bottom') ? parseInt(this.inViewElems[i].getAttribute('data-offset-bottom')) : window.innerHeight;
-            var isPercentage = this.inViewElems[i].getAttribute('data-percentage') && this.inViewElems[i].getAttribute('data-percentage') === 'true';
+    this.opts = {
+        inViewClass: (opts && opts.inViewClass) || 'white-is-in-view', 
+        outViewClass: (opts && opts.outViewClass) || 'white-is-out-view'
+    };
+
+    this.checkBounds = function() {
+
+        for(var i = 0; i < this.elemsLength; i++) {
+
+            var bounds       = this.elems[i].getBoundingClientRect();
+            var offsetTop    = this.elems[i].getAttribute('data-offset-top') ? parseInt(this.elems[i].getAttribute('data-offset-top')) : 0;
+            var offsetBottom = this.elems[i].getAttribute('data-offset-bottom') ? parseInt(this.elems[i].getAttribute('data-offset-bottom')) : window.innerHeight;
+            var isPercentage = this.elems[i].getAttribute('data-percentage') && this.elems[i].getAttribute('data-percentage') === 'true';
 
             if ( isPercentage ) {
                 if ( offsetBottom ) offsetBottom = offsetBottom * window.innerHeight / 100;
                 if ( offsetTop ) offsetTop = offsetTop * window.innerHeight / 100;
             }
 
-            var isInView = bounds.top < (window.innerHeight - offsetBottom) && bounds.bottom > (0 + offsetTop);
+            var isInView = bounds.top > (0 + offsetTop) && bounds.bottom < (window.innerHeight - offsetBottom);
 
             if ( isInView ) {
 
-                if ( !this.inViewElems[i].onElementInViewTriggered ) this.inViewElems[i].dispatchEvent(this.events.onElementInView);
-                this.inViewElems[i].onElementInViewTriggered = true;
-                this.inViewElems[i].onElementOutViewTriggered = false;
+                if ( !this.elems[i].onElementInViewTriggered ) this.elems[i].dispatchEvent(this.events.onElementInView);
 
-                this.inViewElems[i].classList.add('white-is-in-view');
+                this.elems[i].onElementInViewTriggered = true;
+                this.elems[i].onElementOutViewTriggered = false;
+
+                this.elems[i].classList.add(this.opts.inViewClass);
+                this.elems[i].classList.remove(this.opts.outViewClass);
 
             } else {
 
-                if ( !this.inViewElems[i].onElementOutViewTriggered ) this.inViewElems[i].dispatchEvent(this.events.onElementOutView);
-                this.inViewElems[i].onElementInViewTriggered = false;
-                this.inViewElems[i].onElementOutViewTriggered = true;
+                if ( !this.elems[i].onElementOutViewTriggered ) this.elems[i].dispatchEvent(this.events.onElementOutView);
+                
+                this.elems[i].onElementInViewTriggered = false;
+                this.elems[i].onElementOutViewTriggered = true;
 
-                this.inViewElems[i].classList.remove('white-is-in-view');
+                this.elems[i].classList.add(this.opts.outViewClass);
+                this.elems[i].classList.remove(this.opts.inViewClass);
 
             }
 
         }
-    }, 
-    
-    init: function() {
+    };
+
+    this.init = function() {
 
         window.dispatchEvent(this.events.onInit);
+        this.running = true;
         this.loop();
 
-    }, 
+    };
 
-    loop: function() {
+    this.stop = function() {
+
+        window.dispatchEvent(this.events.onStop);
+        this.running = false;
+
+    };
+
+    this.loop = function() {
+
+        if ( !this.running ) return;
 
         var self = this;
 
@@ -65,8 +89,17 @@ whiteInView.prototype = {
             self.loop();
         });
 
+    };
+
+    this.events = {
+        onInit: new Event('whiteInView.onInit'), 
+        onStop: new Event('whiteInView.onStop'), 
+        onElementInView: new Event('whiteInView.onElementInView'), 
+        onElementOutView: new Event('whiteInView.onElementOutView')
+    };
+
+    function isNodeList(elems) {
+        return toString.call(elems) === '[object NodeList]';
     }
-
+    
 }
-
-var whiteInView = Object.create(whiteInView.prototype);
