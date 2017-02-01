@@ -14,11 +14,8 @@ Include the `white-in-view.min.js` script before the closing `</body>` tag.
 ```
 Create a new instance of `WhiteInView()` and run it.
 ```javascript
-// Setting the selector
-var mySelector = document.querySelectorAll('.my-class');
-
 // Creating the new instance
-var myInstance = new WhiteInView(mySelector);
+var myInstance = new WhiteInView('.my-class');
 
 // Now run the .init() method
 myInstance.init();
@@ -80,6 +77,13 @@ Stops the WhiteInView instance. Triggers the `whiteInView.onStop` event on the e
 myInstance.stop();
 ```
 
+## .reload()
+Reloads the WhiteInView instance (i.e. if you dynamically added new elements). Triggers the `whiteInView.onReload` event on the element(s) that match(es) the selector.
+
+```
+myInstance.reload();
+```
+
 # Events
 
 ## whiteInView.onInit
@@ -96,6 +100,15 @@ Triggered when the .stop() method is called.
 
 ```javascript
 window.addEventListener('whiteInView.onStop', function() {
+    // Do stuff ...
+});
+```
+
+## whiteInView.onReload
+Triggered when the .reload() method is called.
+
+```javascript
+window.addEventListener('whiteInView.onReload', function() {
     // Do stuff ...
 });
 ```

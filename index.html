@@ -24,6 +24,10 @@
             transition: 0.2s background-color
         }
 
+        .invisible {
+            display: none
+        }
+
         .is-in-view {
             background-color: #bada55
         }
@@ -35,35 +39,79 @@
     
     <script src="white-in-view.js"></script>
     <script>
-
+        /*
+         * Demo stuff
+         */
         var i = 0, 
+            id = 0, 
             max = 200, 
             cont = document.getElementById('container');
 
-        for(i; i < max; i++) {
+        function addElement() {
+
             var elem = document.createElement('div');
+            elem.setAttribute('id', 'elem-' + id);
             elem.classList.add('white-in-view-check');
             elem.classList.add('circle');
             elem.style.top = Math.floor(Math.random() * document.body.scrollHeight - 70) + 'px';
             elem.style.left = Math.floor(Math.random() * window.innerWidth - 70) + 'px';
             elem.setAttribute('data-offset-top', 100);
             elem.setAttribute('data-offset-bottom', 100);
+
+            var rnd = Math.floor(Math.random() * 100);
+
+            if ( rnd % 5 === 0 && id !== 4 ) elem.classList.add('invisible');
+
             cont.appendChild(elem);
+
+            id++;
+
+            console.log('dynamically added element');
+
         }
 
-        var four = new WhiteInView(document.querySelectorAll('.white-in-view-check'), {
+        console.info('Call the addElement() function once or multiple times to, ehm, add an element. After that call the myInstance.reload() method. ^‿^');
+
+        /*
+         * Adding elements
+         */
+        for(i; i < max; i++) {
+           addElement();
+        }
+
+        /*
+         * Listening for events
+         */
+        window.addEventListener('whiteInView.onInit', function() {
+            console.info('init() on WhiteInview instance');
+        });
+
+        window.addEventListener('whiteInView.onStop', function() {
+            console.info('stop() on WhiteInview instance');
+        });
+
+        window.addEventListener('whiteInView.onReload', function() {
+            console.info('reload() on WhiteInview instance');
+        });
+
+        document.querySelector('#elem-4').addEventListener('whiteInView.onElementInView', function() {
+            var id = this.getAttribute('id');
+            console.info('Element with id ' + id + ' in viewport');
+        });
+
+        document.querySelector('#elem-4').addEventListener('whiteInView.onElementOutView', function() {
+            var id = this.getAttribute('id');
+            console.info('Element with id ' + id + ' out of viewport');
+        });
+
+        /*
+         * Creating and initiating the instance
+         */
+        var myInstance = new WhiteInView('.white-in-view-check', {
             inViewClass: 'is-in-view', 
             outViewClass: 'is-out-view'
         });
-        four.init();
-
-        // window.addEventListener('whiteInView.onInit', function() {
-        //     console.log('init');
-        // });
-
-        // document.getElementById('elem-3').addEventListener('whiteInView.onElementInView', function() {
-        //     console.log('in view');
-        // });
+        myInstance.init();
     </script>
 </body>
 </html>
