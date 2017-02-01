@@ -130,10 +130,16 @@ document.querySelector('.my-element').addEventListener('whiteInView.onElementOut
 ```
 
 # Compatibility
-The script has been tested on:
+The script has been tested (and works) on:
 
 - Chrome 55
 - Firefox 50
 - Safari 9.1
 - Opera 42
 - Opera Neon 1
+- Microsoft Edge 38
+
+Sorry IE11 users, you will have to wait a bit more ¯\_ツ_/¯
+
+P.S.
+No, IE10 won't be supported  (⌐■_■)
