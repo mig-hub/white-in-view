@@ -1,3 +1,5 @@
+[![DeepScan Grade](https://deepscan.io/api/projects/316/branches/511/badge/grade.svg)](https://deepscan.io/dashboard/#view=project&pid=316&bid=511)
+
 # white-in-view
 A simple vanilla JavaScript library to check whether an element is into the viewport.
 
