@@ -44,7 +44,7 @@ function WhiteInView(selector, opts) {
 
             var bounds       = this.elems[i].getBoundingClientRect();
             var offsetTop    = this.elems[i].getAttribute('data-offset-top') ? parseInt(this.elems[i].getAttribute('data-offset-top')) : 0;
-            var offsetBottom = this.elems[i].getAttribute('data-offset-bottom') ? parseInt(this.elems[i].getAttribute('data-offset-bottom')) : window.innerHeight;
+            var offsetBottom = this.elems[i].getAttribute('data-offset-bottom') ? parseInt(this.elems[i].getAttribute('data-offset-bottom')) : 0;
             var isPercentage = this.elems[i].getAttribute('data-percentage') && this.elems[i].getAttribute('data-percentage') === 'true';
 
             // Calculating percentages instead of pixels
